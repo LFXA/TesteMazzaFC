@@ -10,3 +10,6 @@ TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.Views.pdb
 TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.pdb
 TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.dll
 TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.dll
+TesteMazzaAPI/bin
+TesteMazzaAPI/obj
+TesteMazzaAPI/obj/Debug/netcoreapp3.1/TesteMazzaAPI.assets.cache

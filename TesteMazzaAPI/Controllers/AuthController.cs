@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using TesteMazzaAPI.Data;
 using TesteMazzaAPI.Models;
@@ -14,11 +18,14 @@ namespace TesteMazzaAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly TesteMazzaContext _context;
-        public AuthController(TesteMazzaContext context)
+        private readonly IConfiguration _configuration;
+        public AuthController(TesteMazzaContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
-       [HttpPost("login")]
+        
+        [HttpPost("login")]
         public IActionResult Index([FromForm]Login login)
         {
             var user = _context.Users.Where(t => t.Email == login.Email && t.Password == login.Password).FirstOrDefault();
@@ -26,13 +33,32 @@ namespace TesteMazzaAPI.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(new { token = login.Email });
+            JwtSecurityToken jwtSecurityToken = GenerateToken(login);
+            var JwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+
+            return Ok(new {token = JwtToken, email = login.Email });
         }
 
-        private JwtSecurityToken GenerateToken()
+        private JwtSecurityToken GenerateToken(Login user)
         {
-            var jwtSecurityToken = new JwtSecurityToken();
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email ),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
+
+            };
+            var symmetricSecurrityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Key"]));
+            var signingCredentials = new SigningCredentials(symmetricSecurrityKey, SecurityAlgorithms.HmacSha256);
+            var jwtSecurityToken = new JwtSecurityToken(
+                issuer: _configuration["Issuer"],
+                audience: _configuration["Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(5),
+                signingCredentials: signingCredentials                
+                );
+            
             return jwtSecurityToken;
         }
     }

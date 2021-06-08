@@ -35,3 +35,4 @@ C:\Users\lucas.aquino\source\repos\TesteMazzaFC\TesteMazzaFC\obj\Debug\netcoreap
 C:\Users\lucas.aquino\source\repos\TesteMazzaFC\TesteMazzaFC\obj\Debug\netcoreapp3.1\TesteMazzaFC.pdb
 C:\Users\lucas.aquino\source\repos\TesteMazzaFC\TesteMazzaFC\obj\Debug\netcoreapp3.1\TesteMazzaFC.genruntimeconfig.cache
 C:\Users\lucas.aquino\source\repos\TesteMazzaFC\TesteMazzaFC\obj\Debug\netcoreapp3.1\TesteMazzaFC.csproj.CopyComplete
+C:\Users\lucas.aquino\source\repos\TesteMazzaFC\TesteMazzaFC\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll

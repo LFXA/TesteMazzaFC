@@ -1,0 +1,12 @@
+
+.vs/TesteMazzaFC/v16/.suo
+TesteMazzaAPI/bin/Debug/netcoreapp3.1/TesteMazzaAPI.dll
+TesteMazzaAPI/bin/
+TesteMazzaAPI/obj/
+TesteMazzaAPI/obj/Debug/netcoreapp3.1/TesteMazzaAPI.csprojAssemblyReference.cache
+TesteMazzaFC/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+TesteMazzaFC/obj/project.nuget.cache
+TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.Views.pdb
+TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.pdb
+TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.dll
+TesteMazzaFC/obj/Debug/netcoreapp3.1/TesteMazzaFC.dll

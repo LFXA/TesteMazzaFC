@@ -14,5 +14,6 @@ namespace TesteMazzaAPI.Data
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
     }
 }

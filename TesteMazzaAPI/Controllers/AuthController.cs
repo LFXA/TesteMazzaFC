@@ -2,12 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using TesteMazzaAPI.Data;
 using TesteMazzaAPI.Models;
 
@@ -35,7 +33,6 @@ namespace TesteMazzaAPI.Controllers
             }
             JwtSecurityToken jwtSecurityToken = GenerateToken(login);
             var JwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-
 
             return Ok(new {token = JwtToken, email = login.Email });
         }

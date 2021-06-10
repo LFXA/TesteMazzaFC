@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace TesteMazzaAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProdutosController : ControllerBase
     {
         private readonly TesteMazzaContext _context;
@@ -27,13 +29,13 @@ namespace TesteMazzaAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Produto produto)
         {
-            var selectProduto = _context.Produtos.Where(p => p.Nome.ToLower() == produto.Nome.ToLower()).FirstOrDefault();
+            var selectProduto = _context.Produtos.Where(p => p.Nome == produto.Nome).FirstOrDefault();
             if (selectProduto != null)
                 return Unauthorized();
 
-            var produtos = _context.Produtos.Add(produto);
-            var result = await _context.SaveChangesAsync();
-            return Ok(result);
+            _context.Produtos.Add(produto);
+            var result = _context.SaveChanges();
+            return Ok("Produto Criado");
         }
     }
 }

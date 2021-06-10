@@ -32,8 +32,8 @@
 
                 <td> @item.Preco</td>
                 <td>
-                    <a >Atualizar</a>
-                    <a asp-action="Delete">Deletar</a>
+                    <a  asp-page-handler="Atualiza" asp-route-id="@item.Id" asp-route-categoria="@item.Categoria" asp-route-nome="@item.Nome" asp-route-preco="@item.Preco">Atualizar</a>
+                    <a asp-page-handler="Delete" asp-route-prodId="@item.Id">Deletar</a>
                 </td>
             </tr>
         }

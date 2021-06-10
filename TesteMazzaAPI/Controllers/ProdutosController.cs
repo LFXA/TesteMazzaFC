@@ -37,5 +37,28 @@ namespace TesteMazzaAPI.Controllers
             var result = _context.SaveChanges();
             return Ok("Produto Criado");
         }
+
+        [HttpPut]
+        public IActionResult Update(Produto produto)
+        {
+            var selectProduto = _context.Produtos.Where(p => p.Nome == produto.Nome).FirstOrDefault();
+            if (selectProduto != null)
+                return Unauthorized();
+
+            _context.Produtos.Update(produto);
+            var result = _context.SaveChanges();
+            return Ok("Produto Alterado");
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var selectProduto = _context.Produtos.Where(p => p.Id == id).FirstOrDefault();
+            if (selectProduto == null)
+                return Unauthorized();
+
+            _context.Produtos.Remove(selectProduto);
+            var result = _context.SaveChanges();
+            return Ok("Produto Removido");
+        }
     }
 }

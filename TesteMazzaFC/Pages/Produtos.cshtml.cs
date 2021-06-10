@@ -16,7 +16,7 @@ namespace TesteMazzaFC.Pages.Shared
     public class ProdutosModel : PageModel
     {
         public String Nome { get; set; }
-        public String  Categoria { get; set; }
+        public String Categoria { get; set; }
         public String Preco { get; set; }
         public List<Produto> produtos = new List<Produto>();
         public ISession Session { get; set; }
@@ -26,10 +26,10 @@ namespace TesteMazzaFC.Pages.Shared
             Session = httpContextAccessor.HttpContext.Session;
 
         }
-       
+
         public async Task OnGetAsync()
         {
-            produtos =   await GetProdutos();
+            produtos = await GetProdutos();
         }
 
         private async Task<List<Produto>> GetProdutos()
@@ -61,9 +61,30 @@ namespace TesteMazzaFC.Pages.Shared
             }
             return new List<Produto>();
         }
-        public void Delete()
+        public async void OnGetDelete(int prodId)
         {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44326/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var token = Session.GetString("token");
 
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                var result = await client.DeleteAsync($"/api/produtos/{prodId}");
+            }
+        }
+        public IActionResult OnGetAtualiza(int id, string nome, string categoria, string preco)
+        {
+            var produto = new Produto
+            {
+                Id = id,
+                Categoria = categoria,
+                Nome = nome,
+                Preco = Convert.ToDecimal(preco)
+            };
+           return RedirectToPage("/AtualizaProduto","OnGet", produto);
         }
     }
 }

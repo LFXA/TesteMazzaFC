@@ -10,33 +10,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using TesteMazzaAPI.Models;
 
 namespace TesteMazzaFC.Pages
 {
-    public class CriaProdutoModel : PageModel
+    public class AtualizaProdutoModel : PageModel
     {
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         [Required]
-        public String txtTitulo { get; set; }
+        public String Nome { get; set; }
        
-        [BindProperty]
-        public String[] selecionado { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public String[] Categoria { get; set; }
 
         public SelectList Categorias { get; set; }
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         [Required]
-        public Decimal txtPreco { get; set; }
+        public String Preco { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int Id { get; set; }
 
         public ISession Session { get; set; }
-        public CriaProdutoModel(IHttpContextAccessor httpContextAccessor)
+        public AtualizaProdutoModel(IHttpContextAccessor httpContextAccessor)
         {
             Session = httpContextAccessor.HttpContext.Session;
         }
 
-        public void OnGet()
-        {
-            Categorias = new SelectList(new string[] { "Alimento", "Bebida", "Outros" });
+        public void OnGet(string preco)
+        {          
+
         }
+
+       
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             if (ModelState.IsValid)
@@ -49,9 +54,9 @@ namespace TesteMazzaFC.Pages
                     var token = Session.GetString("token");
 
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-                    var body = JsonConvert.SerializeObject(new { Nome = txtTitulo, Preco = txtPreco, Categoria = selecionado[0] });
-                    var result = await client.PostAsync("/api/produtos", new StringContent(body, Encoding.UTF8, "application/json"));
+                    var newPreco = Preco.Replace('.', ',');
+                    var body = JsonConvert.SerializeObject(new { Id = Id, Nome = Nome, Preco = Convert.ToDecimal(newPreco), Categoria = Categoria[0] });
+                    var result = await client.PutAsync("/api/produtos", new StringContent(body, Encoding.UTF8, "application/json"));
                     if (result.IsSuccessStatusCode)
                     {
                         await result.Content.ReadAsStringAsync();

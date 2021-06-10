@@ -24,7 +24,18 @@
     <tbody>
         @foreach (var item in Model.produtos)
         {
+            <tr>
+                <td> @item.Nome</td>
 
+                <td> @item.Categoria</td>
+
+
+                <td> @item.Preco</td>
+                <td>
+                    <a >Atualizar</a>
+                    <a asp-action="Delete">Deletar</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

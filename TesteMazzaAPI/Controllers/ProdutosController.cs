@@ -27,7 +27,7 @@ namespace TesteMazzaAPI.Controllers
             return Ok(new { produtos });
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Produto produto)
+        public IActionResult Create(Produto produto)
         {
             var selectProduto = _context.Produtos.Where(p => p.Nome == produto.Nome).FirstOrDefault();
             if (selectProduto != null)

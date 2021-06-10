@@ -52,8 +52,7 @@ namespace TesteMazzaFC.Pages
                        new KeyValuePair<string, String>("Password", txtPassword)
 
                    });
-                    var body = JsonConvert.SerializeObject(new { Email = txtEmail, Password = txtPassword });
-
+                
                     var result = await client.PostAsync("/api/auth/login", formContent);
                     if (result.IsSuccessStatusCode)
                     {
